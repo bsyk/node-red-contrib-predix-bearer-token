@@ -1,0 +1,62 @@
+<script type='text/javascript'>
+    RED.nodes.registerType('predix-bearer-token', {
+        category: 'advanced',
+        color: '#ebf7fb',
+        defaults: {
+            name: { value: 'Token' },
+            uaaUrl: { value: '', required: true },
+        },
+        credentials: {
+            clientId: { type: 'text', required: true, placeholder: 'Client ID' },
+            clientSecret: { type: 'password', required: true, placeholder: 'Client Secret' },
+        },
+        inputs: 1,
+        outputs: 1,
+        icon: 'logo.png',
+        label: function() {
+            return this.name || 'Token';
+        },
+        paletteLabel: 'Predix UAA',
+    });
+</script>
+
+<script type='text/x-red' data-template-name='predix-bearer-token'>
+    <div class='form-row'>
+        <label for='node-input-name'><i class='icon-tag'></i> Name</label>
+        <input type='text' id='node-input-name' placeholder='Name'>
+    </div>
+    <div class='form-row'>
+        <label for='node-input-uaaUrl'><i class='icon-certificate'></i> UAA URL</label>
+        <input type='text' id='node-input-uaaUrl' placeholder='https://8b302b62-c98d-4317-b756-c24a8e23a685.predix-uaa.run.aws-usw02-pr.ice.predix.io/oauth/token'>
+    </div>
+    <div class='form-row'>
+        <label for='node-input-clientId'><i class='icon-user'></i> Client ID</label>
+        <input type='text' id='node-input-clientId' placeholder='Client ID'>
+    </div>
+    <div class='form-row'>
+        <label for='node-input-clientSecret'><i class='icon-exclamation-sign'></i> Client Secret</label>
+        <input type='password' id='node-input-clientSecret' placeholder='Client Secret'>
+    </div>
+</script>
+
+<script type='text/x-red' data-help-name='predix-bearer-token'>
+    <p>Retrieve a Bearer Token from Predix UAA</p>
+    <p>
+      <ul>
+        <li><b>Name:</b> Enter a name for this node</li>
+        <li><b>UAA url:</b> Enter the host url for the UAA instance (including /oauth/token) to call</li>
+        <li><b>Client ID:</b> Enter a client ID</li>
+        <li><b>Client secret:</b> Enter the client secret</li>
+      </ul>
+    </p>
+    <p>
+      Note: The client will need the client_credentials grant type.
+    </p>
+    <p>The input message will be updated and the token added in 2 places:</p>
+    <p>
+      <ul>
+        <li>msg.token = the bearer token</li>
+        <li>msg.headers.authorization = `Bearer [token]`</li>
+      </ul>
+    </p>
+</script>
